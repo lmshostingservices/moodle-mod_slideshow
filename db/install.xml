@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/slideshow/db" VERSION="2026061700026" COMMENT="XMLDB file for Moodle mod_slideshow"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="slideshow" COMMENT="Defines instances of the slideshow module">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Links slideshow to a Moodle course"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="intro" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="1" SEQUENCE="false"/>
+        <FIELD NAME="completionallslides" TYPE="int" LENGTH="4" NOTNULL="false" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="containerheight" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="slideratio" TYPE="char" LENGTH="10" NOTNULL="false" DEFAULT="16:9" SEQUENCE="false" COMMENT="Slide aspect ratio: 1:1, 4:3, 3:2, 16:10, 16:9, 2:1, 21:9"/>
+        <FIELD NAME="enablevoiceover" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Enable AI voiceover narration for slides"/>
+        <FIELD NAME="voicelanguage" TYPE="char" LENGTH="10" NOTNULL="false" DEFAULT="en-AU" SEQUENCE="false" COMMENT="Chirp 3 HD language code"/>
+        <FIELD NAME="voicegender" TYPE="char" LENGTH="10" NOTNULL="false" DEFAULT="female" SEQUENCE="false" COMMENT="Voice gender: male or female"/>
+        <FIELD NAME="voicestyle" TYPE="char" LENGTH="20" NOTNULL="false" DEFAULT="Aoede" SEQUENCE="false" COMMENT="Chirp 3 HD voice name"/>
+        <FIELD NAME="requirevoiceover" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Require voiceover to finish before next slide"/>
+        <FIELD NAME="voiceoverstatus" TYPE="char" LENGTH="20" NOTNULL="false" DEFAULT="none" SEQUENCE="false" COMMENT="Generation status: none, generating, ready, error"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="course" UNIQUE="false" FIELDS="course"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="slideshow_voiceovers" COMMENT="Stores per-slide voiceover audio data and OCR text">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="slideshowid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="filename" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="Original image filename to match slide"/>
+        <FIELD NAME="contenthash" TYPE="char" LENGTH="40" NOTNULL="false" SEQUENCE="false" COMMENT="SHA1 of source image for change detection"/>
+        <FIELD NAME="ocrtext" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Extracted text from image via OCR"/>
+        <FIELD NAME="customtext" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Custom user-provided voiceover text"/>
+        <FIELD NAME="voicelanguage" TYPE="char" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="voicegender" TYPE="char" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="voicestyle" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="duration" TYPE="number" LENGTH="10" DECIMALS="2" NOTNULL="false" SEQUENCE="false" COMMENT="Audio duration in seconds"/>
+        <FIELD NAME="audiohash" TYPE="char" LENGTH="40" NOTNULL="false" SEQUENCE="false" COMMENT="Content hash of stored audio file"/>
+        <FIELD NAME="status" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="pending" SEQUENCE="false" COMMENT="pending, ready, error, skipped"/>
+        <FIELD NAME="errortext" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="creditscharged" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="voiceover_disabled" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="1 = voiceover intentionally disabled for this slide (skip generation and playback)"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="slideshowid_filename" UNIQUE="true" FIELDS="slideshowid, filename"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="slideshow_completion" COMMENT="Tracks per-user slide viewing progress for completion">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="instanceid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="slidecount" TYPE="int" LENGTH="9" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="viewed" TYPE="int" LENGTH="9" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="completion" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="instanceid_userid" UNIQUE="true" FIELDS="instanceid, userid"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="slideshow_extra_slides" COMMENT="Video and poster slides for slideshow activities">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="slideshowid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Foreign key to slideshow.id"/>
+        <FIELD NAME="sortorder" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Position in combined slide sequence (shared with image file sortorders)"/>
+        <FIELD NAME="slidetype" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="video" SEQUENCE="false" COMMENT="video or poster"/>
+        <FIELD NAME="title" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="Optional label shown below the slide"/>
+        <FIELD NAME="videosource" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="youtube, url, or upload"/>
+        <FIELD NAME="videourl" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="YouTube watch URL or direct video URL"/>
+        <FIELD NAME="videominwatch" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Watch gating: 0=none, -1=full video, N=at least N seconds"/>
+        <FIELD NAME="imagefilename" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="Filename in slideposterimages filearea (poster type only)"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="slideshowid" UNIQUE="false" FIELDS="slideshowid"/>
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>

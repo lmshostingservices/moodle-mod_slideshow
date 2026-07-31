@@ -1,0 +1,9 @@
+{
+  "component": "mod_slideshow",
+  "version": "1.6.22",
+  "numeric_version": "2026042200022",
+  "build_id": "slideshow21w01x021",
+  "build_timestamp": "2026-04-22T07:07:50.402Z",
+  "folder": "mod_slideshow",
+  "verification": "amd_encoding_fix_non_ascii_clean"
+}

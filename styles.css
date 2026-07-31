@@ -1,0 +1,1131 @@
+/* === Player boundary wrapper === */
+/* z-index: 1 prevents slideshow from overlapping Moodle primary/secondary navigation */
+.nctslidesshow-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 64px;
+  background: #f5f6f8;
+  border-radius: 12px;
+  border: 1px solid #e8eaed;
+  overflow: hidden;
+}
+
+/* === Player area wrapper (carousel + navigation) - excludes teacher panel === */
+.nctslidesshow-content .slideshow-player-area {
+  position: relative;
+}
+
+/* === Slideshow container === */
+.nctslidesshow-content .nct-slideshow-carousel {
+  max-width: 100%;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+}
+
+/* Inner wrapper */
+.nctslidesshow-content .nct-slideshow-carousel .carousel-inner {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin-bottom: 0;
+  border-radius: 8px;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+
+/* Each item */
+.nctslidesshow-content .nct-slideshow-carousel .carousel-inner .carousel-item {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+/* From `.slide-image { &.active { ... } }` */
+.nctslidesshow-content .nct-slideshow-carousel .carousel-inner .carousel-item .slide-image.active {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Image wrapper + img - uses object-fit:contain to show full image within the aspect ratio box */
+.nctslidesshow-content .nct-slideshow-carousel .carousel-inner .carousel-item .slideshow-image-only-wrapper {
+  width: 100%;
+  height: 100%;
+  margin-bottom: 0;
+  overflow: hidden;
+}
+.nctslidesshow-content .nct-slideshow-carousel .carousel-inner .carousel-item .slideshow-image-only-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Counter */
+.nctslidesshow-content .nct-slideshow-carousel .slideshow-pagination-counter {
+  text-align: right;
+  margin-bottom: 12px;
+}
+.nctslidesshow-content .nct-slideshow-carousel .slideshow-pagination-counter .current-slide,
+.nctslidesshow-content .nct-slideshow-carousel .slideshow-pagination-counter .total-slides {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #dde0e4;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  background: #fff;
+}
+.nctslidesshow-content .nct-slideshow-carousel .slideshow-pagination-counter .total-slides {
+  color: #64748b;
+}
+.nctslidesshow-content .nct-slideshow-carousel .slideshow-pagination-counter .pagination-separator {
+  margin: 0 4px;
+  color: #94a3b8;
+}
+.nctslidesshow-content .nct-slideshow-carousel .slideshow-pagination-counter .current-slide {
+  color: var(--bs-primary, #0d6efd);
+  border-color: var(--bs-primary, #0d6efd);
+  background-color: #fff;
+}
+
+/* ==================== NAVIGATION BUTTONS ==================== */
+
+/* Navigation wrapper - positioned relative to .slideshow-player-area (excludes teacher panel) */
+.nctslidesshow-content .slideshow-navigation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.nctslidesshow-content .slideshow-navigation .carousel-control {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* Nav buttons: positioned in the player boundary gutters */
+.nctslidesshow-content .carousel-control-prev,
+.nctslidesshow-content .carousel-control-next {
+  z-index: 5 !important;
+  pointer-events: auto !important;
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 1px solid #d1d5db !important;
+  background: #fff !important;
+  opacity: 1 !important;
+  cursor: pointer !important;
+  transition: background .15s, border-color .15s, box-shadow .15s;
+  box-shadow: 0 1px 3px rgba(0,0,0,.08) !important;
+  padding: 0 !important;
+}
+
+.nctslidesshow-content .carousel-control-prev:hover,
+.nctslidesshow-content .carousel-control-next:hover {
+  background: #f0f2f5 !important;
+  border-color: #b0b5bd !important;
+}
+
+/* Place buttons in the padding gutters of .nctslidesshow-content.
+   .slideshow-player-area fills the content box (inside 64px padding).
+   Negative offsets push buttons into the padding area (still visible
+   because overflow:hidden clips to the padding-box). */
+.nctslidesshow-content .carousel-control-prev {
+  left: -54px !important;
+}
+.nctslidesshow-content .carousel-control-next {
+  right: -54px !important;
+}
+
+/* Chevron icons - dark SVG arrows to contrast against white button background */
+.nctslidesshow-content .carousel-control-prev-icon {
+  width: 16px !important;
+  height: 16px !important;
+  background-size: 100% 100% !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23333'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e") !important;
+  opacity: 0.8 !important;
+}
+.nctslidesshow-content .carousel-control-next-icon {
+  width: 16px !important;
+  height: 16px !important;
+  background-size: 100% 100% !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23333'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !important;
+  opacity: 0.8 !important;
+}
+
+/* Disabled state */
+.nctslidesshow-content .carousel-control-prev[disabled],
+.nctslidesshow-content .carousel-control-next[disabled],
+.nctslidesshow-content .carousel-control-prev[aria-disabled="true"],
+.nctslidesshow-content .carousel-control-next[aria-disabled="true"] {
+  background: #eceef0 !important;
+  border-color: #e5e5e5 !important;
+  cursor: default !important;
+  opacity: 0.4 !important;
+  pointer-events: none !important;
+  box-shadow: none !important;
+}
+
+/* Enabled (active) state */
+.nctslidesshow-content .carousel-control-prev.next-slide-available,
+.nctslidesshow-content .carousel-control-next.next-slide-available {
+  border-color: var(--bs-primary, #0d6efd) !important;
+  background: #fff !important;
+}
+.nctslidesshow-content .carousel-control-prev.next-slide-available:hover,
+.nctslidesshow-content .carousel-control-next.next-slide-available:hover {
+  background: #f0f4ff !important;
+  border-color: var(--bs-primary, #0d6efd) !important;
+}
+
+/* visually-hidden label */
+.nctslidesshow-content .visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* ==================== RESPONSIVE ==================== */
+
+@media (max-width: 991px) {
+  .nctslidesshow-content {
+    padding: 20px 56px;
+  }
+  /* 56px gutter, 44px button: (56-44)/2=6px from edge => -50px */
+  .nctslidesshow-content .carousel-control-prev {
+    left: -50px !important;
+  }
+  .nctslidesshow-content .carousel-control-next {
+    right: -50px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .nctslidesshow-content {
+    padding: 16px 48px;
+    border-radius: 8px;
+  }
+  .nctslidesshow-content .carousel-control-prev,
+  .nctslidesshow-content .carousel-control-next {
+    width: 38px !important;
+    height: 38px !important;
+  }
+  /* 48px gutter, 38px button: (48-38)/2=5px from edge => -43px */
+  .nctslidesshow-content .carousel-control-prev {
+    left: -43px !important;
+  }
+  .nctslidesshow-content .carousel-control-next {
+    right: -43px !important;
+  }
+  .nctslidesshow-content .carousel-control-prev-icon,
+  .nctslidesshow-content .carousel-control-next-icon {
+    width: 14px !important;
+    height: 14px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .nctslidesshow-content {
+    padding: 12px 40px;
+  }
+  .nctslidesshow-content .carousel-control-prev,
+  .nctslidesshow-content .carousel-control-next {
+    width: 34px !important;
+    height: 34px !important;
+  }
+  /* 40px gutter, 34px button: (40-34)/2=3px from edge => -37px */
+  .nctslidesshow-content .carousel-control-prev {
+    left: -37px !important;
+  }
+  .nctslidesshow-content .carousel-control-next {
+    right: -37px !important;
+  }
+}
+
+/* ======================================================= */
+
+#nct-slideshow-carousel {
+  height: auto !important;
+  position: relative;
+}
+
+/* Aspect-ratio container: carousel fills its aspect-ratio box */
+#nct-slideshow-carousel .carousel-inner,
+#nct-slideshow-carousel .carousel-item,
+#nct-slideshow-carousel .slideshow-image-only-wrapper {
+  width: 100%;
+  height: 100%;
+}
+#nct-slideshow-carousel .slideshow-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* === Sorter UI === */
+.slideshow-sorter-wrapper {
+  max-height: none;
+  overflow: visible;
+  width: 100%;
+}
+#slideshow-sorter {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+#slideshow-sorter > li.slideshow-sorter-item {
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+  transition: box-shadow .2s ease, transform .1s ease;
+}
+.slideshow-sorter-item-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+}
+.slideshow-sorter-wrapper .ss-handle {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  -webkit-user-select: none;
+  user-select: none;
+  color: #6b7280;
+}
+.slideshow-sorter-wrapper .ss-handle::before {
+  content: "⋮⋮";
+  line-height: 1;
+  font-size: 18px;
+}
+.slideshow-sorter-item.dragging .ss-handle {
+  cursor: grabbing;
+}
+.slideshow-sorter-item-inner > img {
+  width: 80px !important;
+  height: 60px !important;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,.08);
+  flex: 0 0 auto;
+}
+.slideshow-sorter-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.slideshow-sorter-controls {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+.slideshow-sorter-controls .ss-move {
+  -webkit-appearance: none;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 6px;
+  border-radius: 8px;
+  min-width: 30px;
+  min-height: 30px;
+  cursor: pointer;
+}
+.slideshow-sorter-controls .ss-move:hover {
+  background: rgba(0,0,0,.06);
+}
+#slideshow-sorter > li.slideshow-sorter-item:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,.08);
+}
+#slideshow-sorter > li.slideshow-sorter-item.dragging {
+  transform: scale(.995);
+  box-shadow: 0 8px 18px rgba(0,0,0,.12);
+}
+#slideshow-sorter > li.slideshow-sorter-placeholder {
+  border: 2px dashed rgba(0,0,0,.15);
+  border-radius: 12px;
+  background: rgba(0,0,0,.02);
+  height: 72px;
+}
+@media (max-width: 640px) {
+  .slideshow-sorter-item-inner > img {
+    width: 64px !important;
+    height: 48px !important;
+  }
+  .slideshow-sorter-item-inner {
+    padding: 8px 10px;
+    gap: 10px;
+  }
+}
+#fitem_id_reorderui .col-md-3 {
+  display: none;
+}
+#fitem_id_reorderui .col-md-9 {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+#fitem_id_reorderui .slideshow-sorter-wrapper,
+#fitem_id_reorderui #slideshow-sorter,
+#fitem_id_reorderui .slideshow-sorter-item-inner {
+  width: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  #slideshow-sorter > li.slideshow-sorter-item {
+    transition: none;
+  }
+}
+
+
+#nct-slideshow-carousel .carousel-item {
+  position: relative;
+}
+
+/* Smooth slide animation even without Bootstrap JS */
+#nct-slideshow-carousel .carousel-item {
+  position: relative;
+  display: none;
+  transition: transform .6s ease;
+}
+
+#nct-slideshow-carousel .carousel-item.active,
+#nct-slideshow-carousel .carousel-item-next,
+#nct-slideshow-carousel .carousel-item-prev {
+  display: block;
+}
+
+/* initial positions of the incoming/outgoing items */
+#nct-slideshow-carousel .carousel-item-next {
+  transform: translateX(100%);
+}
+#nct-slideshow-carousel .carousel-item-prev {
+  transform: translateX(-100%);
+}
+
+/* when the transition starts */
+#nct-slideshow-carousel .carousel-item-start {
+  transform: translateX(0);
+}
+#nct-slideshow-carousel .carousel-item-end {
+  transform: translateX(0);
+}
+
+/* current active moves out */
+#nct-slideshow-carousel .active.carousel-item-start {
+  transform: translateX(-100%);
+}
+#nct-slideshow-carousel .active.carousel-item-end {
+  transform: translateX(100%);
+}
+
+/* incoming item moves into place */
+#nct-slideshow-carousel .carousel-item-next.carousel-item-start {
+  transform: translateX(0);
+}
+#nct-slideshow-carousel .carousel-item-prev.carousel-item-end {
+  transform: translateX(0);
+}
+
+/* === Voiceover Controls === */
+.slideshow-voiceover-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.75);
+  border-radius: 24px;
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  min-width: 200px;
+  max-width: 90%;
+}
+
+.slideshow-image-only-wrapper {
+  position: relative;
+}
+
+.slideshow-vo-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  transition: background 0.2s;
+}
+
+.slideshow-vo-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.slideshow-vo-progress {
+  flex: 1;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  overflow: hidden;
+  min-width: 80px;
+}
+
+.slideshow-vo-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #3b82f6;
+  border-radius: 2px;
+  transition: width 0.1s linear;
+}
+
+.slideshow-vo-status {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 11px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* === Teacher Voiceover Panel === */
+.slideshow-teacher-panel {
+  max-width: 1100px;
+  margin: 0 auto 16px;
+  border: 1px solid #e0e7ff;
+  border-radius: 10px;
+  background: #f0f4ff;
+  overflow: hidden;
+}
+.slideshow-teacher-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e0e7ff;
+  color: #1e3a5f;
+}
+.slideshow-teacher-panel-status {
+  margin-left: auto;
+}
+.slideshow-vo-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.slideshow-vo-badge-ready {
+  background: #d1fae5;
+  color: #065f46;
+}
+.slideshow-vo-badge-pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+.slideshow-vo-badge-error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+.slideshow-vo-badge-disabled {
+  background: #e5e7eb;
+  color: #6b7280;
+}
+.slideshow-teacher-panel-body {
+  padding: 12px 16px;
+}
+.slideshow-teacher-panel-desc {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.5;
+}
+.slideshow-teacher-panel-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.slideshow-teacher-panel-actions .btn {
+  display: inline-flex;
+  align-items: center;
+}
+.slideshow-vo-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 200px;
+}
+.slideshow-vo-gen-bar-bg {
+  flex: 1;
+  height: 6px;
+  background: #cbd5e1;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.slideshow-vo-gen-bar {
+  height: 100%;
+  width: 30%;
+  background: #3b82f6;
+  border-radius: 3px;
+  animation: slideshow-vo-pulse 1.5s ease-in-out infinite;
+}
+@keyframes slideshow-vo-pulse {
+  0%, 100% {
+    width: 30%;
+  }
+  50% {
+    width: 70%;
+  }
+}
+.slideshow-vo-gen-text {
+  font-size: 12px;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+/* === Per-Slide Voiceover Editor === */
+.slideshow-vo-slides-list {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.slideshow-vo-slide-row {
+  border: 1px solid #e0e7ff;
+  border-radius: 8px;
+  background: #fff;
+  padding: 12px;
+}
+.slideshow-vo-slide-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.slideshow-vo-slide-thumb-wrap {
+  position: relative;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.slideshow-vo-slide-thumb {
+  width: 64px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid rgba(0,0,0,.08);
+  flex-shrink: 0;
+}
+.slideshow-vo-slide-thumb-expanded {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  max-width: 600px;
+  max-height: 450px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 2px solid #6366f1;
+  box-shadow: 0 12px 40px rgba(0,0,0,.3);
+  background: #fff;
+  padding: 4px;
+  pointer-events: none;
+}
+.slideshow-vo-slide-info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.slideshow-vo-slide-label {
+  font-weight: 600;
+  font-size: 13px;
+  color: #1e3a5f;
+  white-space: nowrap;
+}
+.slideshow-vo-slide-text-wrap {
+  position: relative;
+}
+.slideshow-vo-slide-textarea {
+  width: 100%;
+  font-size: 13px;
+  line-height: 1.5;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px 10px;
+  resize: vertical;
+  min-height: 60px;
+  color: #374151;
+  background: #fafbfc;
+}
+.slideshow-vo-slide-textarea:focus {
+  border-color: #6366f1;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.15);
+  background: #fff;
+}
+.slideshow-vo-slide-text-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+.slideshow-vo-slide-gen-btn {
+  flex-shrink: 0;
+  font-size: 12px;
+}
+.slideshow-vo-toggle-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  color: #6b7280;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.slideshow-vo-toggle-btn:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+  color: #374151;
+}
+.slideshow-vo-toggle-btn.is-disabled {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #dc2626;
+}
+.slideshow-vo-toggle-btn.is-disabled:hover {
+  background: #fecaca;
+  border-color: #f87171;
+}
+.slideshow-vo-slide-row.vo-disabled {
+  opacity: 0.55;
+  background: #f9fafb;
+}
+.slideshow-vo-slide-row.vo-disabled .slideshow-vo-slide-textarea {
+  background: #f3f4f6;
+  color: #9ca3af;
+}
+@media (max-width: 640px) {
+  .slideshow-vo-slide-thumb {
+    width: 48px;
+    height: 36px;
+  }
+  .slideshow-vo-slide-thumb-expanded {
+    max-width: 90vw;
+    max-height: 300px;
+  }
+  .slideshow-vo-slide-header {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+}
+
+.slideshow-vo-reload-hint {
+  margin: 8px 0;
+  text-align: center;
+}
+
+/* === PowerPoint Import Dropzone === */
+.slideshow-pptx-import {
+  margin-bottom: 16px;
+}
+.slideshow-pptx-dropzone {
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 32px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+  background: #fafbfc;
+}
+.slideshow-pptx-dropzone:hover,
+.slideshow-pptx-dropzone.dragover {
+  border-color: #3b82f6;
+  background: #eff6ff;
+}
+.slideshow-pptx-dropzone-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.slideshow-pptx-dropzone-inner svg {
+  opacity: 0.5;
+}
+.slideshow-pptx-dropzone:hover .slideshow-pptx-dropzone-inner svg,
+.slideshow-pptx-dropzone.dragover .slideshow-pptx-dropzone-inner svg {
+  opacity: 0.8;
+  stroke: #3b82f6;
+}
+.slideshow-pptx-dropzone-text {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #475569;
+}
+.slideshow-pptx-dropzone-formats {
+  margin: 0;
+  font-size: 12px;
+  color: #94a3b8;
+}
+.slideshow-pptx-dropzone-sizelimit {
+  margin: 6px 0 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+}
+.slideshow-pptx-dropzone-compress {
+  margin: 4px 0 0;
+  font-size: 11px;
+  color: #94a3b8;
+  line-height: 1.4;
+  max-width: 480px;
+}
+.slideshow-pptx-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 10px 16px;
+  background: #f0f4ff;
+  border-radius: 8px;
+  border: 1px solid #dbeafe;
+}
+.slideshow-pptx-progress-bar-bg {
+  flex: 1;
+  height: 6px;
+  background: #cbd5e1;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.slideshow-pptx-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #3b82f6;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+.slideshow-pptx-progress-text {
+  font-size: 12px;
+  color: #475569;
+  white-space: nowrap;
+  min-width: 100px;
+}
+.slideshow-pptx-result {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.slideshow-pptx-result.success {
+  background: #ecfdf5;
+  border: 1px solid #10b981;
+  color: #065f46;
+}
+.slideshow-pptx-result.error {
+  background: #fef2f2;
+  border: 1px solid #ef4444;
+  color: #991b1b;
+}
+/* Full-width PPTX import: hide label column, expand content column.
+   NOTE: Do NOT use :has() pseudo-class — Moodle's PHP CSS minifier does not
+   handle it correctly and will corrupt the entire site CSS cache, breaking
+   navigation menus. The JS in pptximport.js handles layout via DOM instead.
+   IMPORTANT: Bootstrap's .d-flex uses display:flex!important which overrides
+   non-important display:none. Must use !important to counter it. */
+#fitem_id_pptximport .col-md-3,
+[data-groupname="pptximport"] .col-md-3 {
+  display: none !important;
+}
+#fitem_id_pptximport .col-md-9,
+[data-groupname="pptximport"] .col-md-9 {
+  -webkit-flex: 0 0 100% !important;
+  flex: 0 0 100% !important;
+  max-width: 100% !important;
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+#fitem_id_pptximport .col-md-9 .form-control-static,
+[data-groupname="pptximport"] .col-md-9 .form-control-static {
+  width: 100%;
+}
+#fitem_id_pptximport,
+[data-groupname="pptximport"] {
+  flex-wrap: wrap;
+  padding-left: 0;
+  padding-right: 0;
+}
+.slideshow-pptx-dropzone {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* === Prevent slideshow from overlapping Moodle navigation === */
+/* Moodle Boost nav typically uses z-index 1030+. Force slideshow stacking context low.   */
+/* Scoped to slideshow view page only so admin pages are never affected.                  */
+/* NOTE: .navbar intentionally omitted here — Boost sets position:sticky on the navbar.  */
+/* Overriding it with position:relative breaks sticky behaviour and causes the site logo  */
+/* to scroll down and overlap the course-index drawer. z-index alone is sufficient since  */
+/* the navbar already has a positioning context from Boost.                               */
+#page-mod-slideshow-view .primary-navigation,
+#page-mod-slideshow-view .secondary-navigation,
+#page-mod-slideshow-view .moremenu {
+  position: relative;
+  z-index: 1030;
+}
+#page-mod-slideshow-view .navbar {
+  z-index: 1030;
+}
+
+/* ============================================================
+   VIDEO & POSTER SLIDE STYLES  (mod_slideshow v1.6.26)
+   ============================================================ */
+
+/* Video wrapper — fills the carousel-item box */
+.nctslidesshow-content .slideshow-video-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  background: #000;
+}
+
+/* Ratio box for iframe / HTML5 video: fills available height */
+.nctslidesshow-content .slideshow-video-ratio-box {
+  flex: 1 1 auto;
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.nctslidesshow-content .slideshow-video-frame,
+.nctslidesshow-content .slideshow-video-element {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  background: #000;
+}
+
+/* Slide title (shown below video or poster image) */
+.nctslidesshow-content .slideshow-slide-title {
+  padding: 8px 14px 10px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: #374151;
+  background: rgba(255,255,255,0.92);
+  border-top: 1px solid #e5e7eb;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 0 0 auto;
+}
+
+/* Watch-time gating bar — shown inside video slide when requirement not yet met */
+.nctslidesshow-content .slideshow-video-watch-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  background: rgba(245, 158, 11, 0.12);
+  border-top: 2px solid #f59e0b;
+  color: #92400e;
+  font-size: 0.88rem;
+  font-weight: 500;
+  flex: 0 0 auto;
+  transition: opacity 0.5s ease;
+}
+
+.nctslidesshow-content .slideshow-video-watch-inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nctslidesshow-content .slideshow-video-watch-inner svg {
+  flex-shrink: 0;
+  color: #d97706;
+}
+
+/* Satisfied state — turns green before fading */
+.nctslidesshow-content .slideshow-video-watch-bar.ss-watch-satisfied {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: #10b981;
+  color: #064e3b;
+}
+
+.nctslidesshow-content .slideshow-video-watch-bar.ss-watch-satisfied svg {
+  color: #059669;
+}
+
+/* Shake animation when student tries to skip past gated video */
+@keyframes ss-shake {
+  0%,100%{ transform:translateX(0); }
+  20%    { transform:translateX(-6px); }
+  40%    { transform:translateX(6px); }
+  60%    { transform:translateX(-4px); }
+  80%    { transform:translateX(4px); }
+}
+.nctslidesshow-content .slideshow-video-watch-bar.ss-watch-shake {
+  animation: ss-shake 0.5s ease;
+}
+
+/* ============================================================
+   EXTRA SLIDE SORTER ITEM STYLES
+   ============================================================ */
+
+.slideshow-sorter-item.ss-extra-sorter-item {
+  background: #f0f4ff;
+  border-color: #c7d2fe;
+}
+
+.slideshow-sorter-item.ss-extra-sorter-item:hover {
+  background: #e5edff;
+}
+
+.slideshow-sorter-extra-inner {
+  gap: 8px;
+}
+
+.ss-extra-type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.ss-extra-type-badge.ss-type-video {
+  background: #dbeafe;
+  color: #1d4ed8;
+  border: 1px solid #93c5fd;
+}
+
+.ss-extra-type-badge.ss-type-poster {
+  background: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #86efac;
+}
+
+.slideshow-sorter-name.ss-extra-name {
+  font-size: 0.82rem;
+  color: #374151;
+}
+
+.ss-extra-delete-inline {
+  font-size: 0.72rem;
+  padding: 2px 6px;
+  margin-left: 4px;
+  border-radius: 3px;
+}
+
+/* ============================================================
+   EXTRA SLIDES MANAGER (in mod_form.php)
+   ============================================================ */
+
+.ss-extra-manager {
+  padding: 12px 0 4px;
+}
+
+.ss-extra-add-btns {
+  margin-bottom: 16px;
+}
+
+.ss-add-panel {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 18px 20px 14px;
+  margin-top: 12px;
+  margin-bottom: 4px;
+}
+
+.ss-panel-title {
+  margin: 0 0 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.ss-form-row {
+  margin-bottom: 12px;
+}
+
+.ss-form-label {
+  display: block;
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: #475569;
+  margin-bottom: 4px;
+}
+
+.ss-form-actions {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.ss-add-status {
+  min-height: 0;
+}

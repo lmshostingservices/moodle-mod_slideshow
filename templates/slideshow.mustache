@@ -1,0 +1,872 @@
+<div class="nctslidesshow-content" id="mod-nct-slidesshow">
+
+  {{#canmanage}}
+  {{#enablevoiceover}}
+  <div class="slideshow-teacher-panel" id="slideshow-teacher-panel" data-cmid="{{cmid}}">
+    <div class="slideshow-teacher-panel-header">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+      <strong>AI Voiceover</strong>
+      <span class="slideshow-teacher-panel-status" id="slideshow-vo-panel-status">
+        {{#voiceoverhasready}}
+          <span class="slideshow-vo-badge slideshow-vo-badge-ready">Ready ({{voiceoverreadycount}}/{{slidecount}} slides)</span>
+        {{/voiceoverhasready}}
+        {{^voiceoverhasready}}
+          <span class="slideshow-vo-badge slideshow-vo-badge-pending">Not generated</span>
+        {{/voiceoverhasready}}
+      </span>
+    </div>
+    <div class="slideshow-teacher-panel-body">
+      <p class="slideshow-teacher-panel-desc" id="slideshow-vo-panel-desc">
+        Add voiceover text for each slide below. You can paste your own text or leave blank to extract text from the image automatically. Each slide costs 5 credits.
+      </p>
+      <div class="slideshow-teacher-panel-actions">
+        <button type="button" class="btn btn-primary" id="slideshow-generate-all-vo-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Generate All Voiceovers ({{slidecount}} slides)
+        </button>
+        <div class="slideshow-vo-progress-wrap" id="slideshow-vo-gen-progress" style="display:none">
+          <div class="slideshow-vo-gen-bar-bg">
+            <div class="slideshow-vo-gen-bar" id="slideshow-vo-gen-bar"></div>
+          </div>
+          <span class="slideshow-vo-gen-text" id="slideshow-vo-gen-text">Generating...</span>
+        </div>
+      </div>
+      <div class="slideshow-vo-slides-list" id="slideshow-vo-slides-list">
+        {{#slides}}
+        {{#showvoiceover}}
+        <div class="slideshow-vo-slide-row{{#vodisabled}} vo-disabled{{/vodisabled}}" data-slide-index="{{index}}" data-filename="{{filename}}" data-vo-disabled="{{#vodisabled}}1{{/vodisabled}}{{^vodisabled}}0{{/vodisabled}}">
+          <div class="slideshow-vo-slide-header">
+            <div class="slideshow-vo-slide-thumb-wrap">
+              <img src="{{{imageurl}}}" class="slideshow-vo-slide-thumb" alt="Slide {{displayindex}}">
+              <img src="{{{imageurl}}}" class="slideshow-vo-slide-thumb-expanded" alt="Slide {{displayindex}} preview">
+            </div>
+            <div class="slideshow-vo-slide-info">
+              <span class="slideshow-vo-slide-label">Slide {{displayindex}}</span>
+              <span class="slideshow-vo-slide-status" id="slideshow-vo-slide-status-{{index}}">
+                {{#vodisabled}}
+                  <span class="slideshow-vo-badge slideshow-vo-badge-disabled">Skipped</span>
+                {{/vodisabled}}
+                {{^vodisabled}}
+                  {{#hasvoiceover}}
+                    <span class="slideshow-vo-badge slideshow-vo-badge-ready">Ready</span>
+                  {{/hasvoiceover}}
+                  {{^hasvoiceover}}
+                    <span class="slideshow-vo-badge slideshow-vo-badge-pending">Pending</span>
+                  {{/hasvoiceover}}
+                {{/vodisabled}}
+              </span>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-primary slideshow-vo-slide-gen-btn" data-slide-index="{{index}}" data-filename="{{filename}}"{{#vodisabled}} disabled{{/vodisabled}}>
+              {{#hasvoiceover}}Regenerate{{/hasvoiceover}}
+              {{^hasvoiceover}}Generate{{/hasvoiceover}}
+            </button>
+            <button type="button" class="slideshow-vo-toggle-btn{{#vodisabled}} is-disabled{{/vodisabled}}" data-slide-index="{{index}}" data-filename="{{filename}}" data-disabled="{{#vodisabled}}1{{/vodisabled}}{{^vodisabled}}0{{/vodisabled}}" title="{{#vodisabled}}Voiceover skipped - click to enable{{/vodisabled}}{{^vodisabled}}Click to skip voiceover for this slide{{/vodisabled}}">
+              {{#vodisabled}}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+              {{/vodisabled}}
+              {{^vodisabled}}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+              {{/vodisabled}}
+            </button>
+          </div>
+          <div class="slideshow-vo-slide-text-wrap">
+            <textarea class="form-control slideshow-vo-slide-textarea" data-slide-index="{{index}}" data-filename="{{filename}}" rows="3" placeholder="Paste or type voiceover text for this slide. Leave blank to use OCR (auto-extract text from image)."{{#vodisabled}} disabled{{/vodisabled}}>{{votext}}</textarea>
+            <div class="slideshow-vo-slide-text-actions">
+              <button type="button" class="btn btn-sm btn-link slideshow-vo-save-text-btn" data-slide-index="{{index}}" data-filename="{{filename}}" style="display:none">Save text</button>
+            </div>
+          </div>
+        </div>
+        {{/showvoiceover}}
+        {{/slides}}
+      </div>
+    </div>
+  </div>
+  {{/enablevoiceover}}
+  {{/canmanage}}
+
+  <div class="slideshow-player-area">
+
+    <div class="nct-slideshow-carousel carousel slide"
+         id="nct-slideshow-carousel"
+         data-bs-wrap="false"
+         data-bs-interval="false"
+         data-slidecount="{{slidecount}}"
+         data-slideratio="{{slideratio}}"
+         data-bs-completionenabled="{{completionstatus}}"
+         data-enablevoiceover="{{#enablevoiceover}}1{{/enablevoiceover}}{{^enablevoiceover}}0{{/enablevoiceover}}"
+         data-requirevoiceover="{{#requirevoiceover}}1{{/requirevoiceover}}{{^requirevoiceover}}0{{/requirevoiceover}}"
+         style="aspect-ratio: {{aspectvalue}};{{#containerheight}} max-height: {{containerheight}}px;{{/containerheight}}">
+
+      {{#displaynav}}
+      <div class="slideshow-pagination-counter">
+        <span class="current-slide">1</span>
+        <span class="pagination-separator">/</span>
+        <span class="total-slides">{{slidecount}}</span>
+      </div>
+      {{/displaynav}}
+
+      <div class="carousel-inner">
+        {{#slides}}
+        <div class="carousel-item slide-item slide-{{slidetype}} {{#active}}active{{/active}}"
+             id="{{itemid}}" data-slide-index="{{index}}"
+             data-has-voiceover="{{#hasvoiceover}}1{{/hasvoiceover}}{{^hasvoiceover}}0{{/hasvoiceover}}"
+             data-audio-duration="{{audioduration}}"
+             data-videominwatch="{{videominwatch}}"
+             data-videosource="{{videosource}}">
+          {{#isimage}}
+          <div class="slideshow-image-only-wrapper">
+            {{#imageurl}}
+            <img src="{{{imageurl}}}" class="d-block slideshow-image" alt="{{alttext}}">
+            {{/imageurl}}
+            {{#hasvoiceover}}
+            <div class="slideshow-voiceover-controls" data-slide-index="{{index}}">
+              <audio class="slideshow-audio" data-slide-index="{{index}}" preload="auto">
+                <source src="{{{audiourl}}}" type="audio/ogg">
+              </audio>
+              <button type="button" class="slideshow-vo-btn slideshow-vo-play" data-slide-index="{{index}}" aria-label="Play voiceover">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+              <div class="slideshow-vo-progress">
+                <div class="slideshow-vo-progress-bar" data-slide-index="{{index}}"></div>
+              </div>
+              <span class="slideshow-vo-status" data-slide-index="{{index}}"></span>
+            </div>
+            {{/hasvoiceover}}
+          </div>
+          {{/isimage}}
+          {{#isposter}}
+          <div class="slideshow-image-only-wrapper">
+            {{#imageurl}}
+            <img src="{{{imageurl}}}" class="d-block slideshow-image" alt="{{alttext}}">
+            {{/imageurl}}
+            {{#videotitle}}<div class="slideshow-slide-title">{{videotitle}}</div>{{/videotitle}}
+          </div>
+          {{/isposter}}
+          {{#isvideo}}
+          <div class="slideshow-video-wrapper">
+            {{#isvideoyt}}
+            <div class="slideshow-video-ratio-box">
+              <iframe class="slideshow-video-frame"
+                      id="yt-player-{{index}}"
+                      data-slide-index="{{index}}"
+                      src="{{{videoembedurl}}}"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen></iframe>
+            </div>
+            {{/isvideoyt}}
+            {{#isvideodirect}}
+            <div class="slideshow-video-ratio-box">
+              <video class="slideshow-video-element"
+                     id="ss-video-{{index}}"
+                     data-slide-index="{{index}}"
+                     controls
+                     preload="metadata">
+                <source src="{{{videourl}}}" type="{{{videomimetype}}}">
+              </video>
+            </div>
+            {{/isvideodirect}}
+            {{#videohaswatchreq}}
+            <div class="slideshow-video-watch-bar" id="video-watch-bar-{{index}}" style="display:none">
+              <div class="slideshow-video-watch-inner">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>{{videowatchprompt}}</span>
+              </div>
+            </div>
+            {{/videohaswatchreq}}
+            {{#videotitle}}<div class="slideshow-slide-title">{{videotitle}}</div>{{/videotitle}}
+          </div>
+          {{/isvideo}}
+        </div>
+        {{/slides}}
+
+        {{^slides}}
+        <div class="slideshow-progress-indicators">
+          <div class="slideshow-image-only-wrapper d-flex align-items-center justify-content-center text-muted">
+            <p>{{str.noimages}}</p>
+          </div>
+        </div>
+        {{/slides}}
+      </div>
+
+    </div>
+
+    {{#displaynav}}
+    <div class="slideshow-navigation">
+      <div class="carousel-control">
+        <button class="carousel-control-prev" type="button"
+                data-bs-target="#nct-slideshow-carousel" data-bs-slide="prev" aria-label="{{str.previous}}">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">{{str.previous}}</span>
+        </button>
+
+        <button class="carousel-control-next" type="button"
+                data-bs-target="#nct-slideshow-carousel" data-bs-slide="next" aria-label="{{str.next}}">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">{{str.next}}</span>
+        </button>
+      </div>
+    </div>
+    {{/displaynav}}
+
+  </div>
+
+</div>
+
+{{#js}}
+(function() {
+  function ready(fn){ if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
+  function setBtnState(btn, enabled){
+    if (!btn) return;
+    if (enabled) { btn.classList.add('next-slide-available'); btn.removeAttribute('disabled'); btn.removeAttribute('aria-disabled'); }
+    else { btn.classList.remove('next-slide-available'); btn.setAttribute('disabled',''); btn.setAttribute('aria-disabled','true'); }
+  }
+
+  ready(function() {
+
+    var celebrationFired = false;
+
+    function playSuccessSound() {
+      try {
+        var AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        var ctx = new AC();
+        var notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach(function(freq, i) {
+          var osc = ctx.createOscillator();
+          var gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.value = freq;
+          gain.gain.setValueAtTime(0.15, ctx.currentTime + i * 0.12);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 0.4);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(ctx.currentTime + i * 0.12);
+          osc.stop(ctx.currentTime + i * 0.12 + 0.4);
+        });
+      } catch(e) {}
+    }
+
+    function launchConfetti() {
+      if (celebrationFired) return;
+      celebrationFired = true;
+      var canvas = document.createElement('canvas');
+      canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99999';
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      document.body.appendChild(canvas);
+      var ctx2d = canvas.getContext('2d');
+      var particles = [];
+      var colors = ['#22c55e','#3b82f6','#f59e0b','#ef4444','#a855f7','#ec4899','#06b6d4'];
+      for (var p = 0; p < 150; p++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height * -1,
+          w: Math.random() * 8 + 4,
+          h: Math.random() * 6 + 2,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          vx: (Math.random() - 0.5) * 4,
+          vy: Math.random() * 3 + 2,
+          rot: Math.random() * 360,
+          rotSpeed: (Math.random() - 0.5) * 10,
+          opacity: 1
+        });
+      }
+      var startTime = Date.now();
+      function animate() {
+        var elapsed = Date.now() - startTime;
+        if (elapsed > 4000) { document.body.removeChild(canvas); return; }
+        ctx2d.clearRect(0, 0, canvas.width, canvas.height);
+        var fadeStart = 3000;
+        particles.forEach(function(pt) {
+          pt.x += pt.vx;
+          pt.y += pt.vy;
+          pt.vy += 0.05;
+          pt.rot += pt.rotSpeed;
+          pt.opacity = elapsed > fadeStart ? 1 - (elapsed - fadeStart) / 1000 : 1;
+          if (pt.opacity <= 0) return;
+          ctx2d.save();
+          ctx2d.translate(pt.x, pt.y);
+          ctx2d.rotate(pt.rot * Math.PI / 180);
+          ctx2d.globalAlpha = pt.opacity;
+          ctx2d.fillStyle = pt.color;
+          ctx2d.fillRect(-pt.w / 2, -pt.h / 2, pt.w, pt.h);
+          ctx2d.restore();
+        });
+        requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    /* === Teacher Voiceover Panel === */
+    var genPanel = document.getElementById('slideshow-teacher-panel');
+    if (genPanel) {
+      var cmid = genPanel.dataset.cmid;
+      var ajaxUrl = M.cfg.wwwroot + '/lib/ajax/service.php?sesskey=' + M.cfg.sesskey;
+
+      function callAjax(methodname, args) {
+        return fetch(ajaxUrl, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify([{index: 0, methodname: methodname, args: args}])
+        }).then(function(r){ return r.json(); }).then(function(data) {
+          var result = data[0];
+          if (result.error) throw new Error(result.error.message || result.error);
+          return result.data || result;
+        });
+      }
+
+      function updateSlideStatus(idx, status, text) {
+        var el = document.getElementById('slideshow-vo-slide-status-' + idx);
+        if (!el) return;
+        var cls = status === 'ready' ? 'slideshow-vo-badge-ready' : (status === 'error' ? 'slideshow-vo-badge-error' : 'slideshow-vo-badge-pending');
+        var label = status === 'ready' ? 'Ready' : (status === 'error' ? 'Error' : (status === 'generating' ? 'Generating...' : 'Pending'));
+        if (text) label = text;
+        el.innerHTML = '<span class="slideshow-vo-badge ' + cls + '">' + label + '</span>';
+      }
+
+      var reloadHintShown = false;
+      function showReloadHint() {
+        if (reloadHintShown) return;
+        reloadHintShown = true;
+        var desc = document.getElementById('slideshow-vo-panel-desc');
+        if (desc) {
+          var hint = document.createElement('div');
+          hint.className = 'slideshow-vo-reload-hint';
+          hint.innerHTML = '<button type="button" class="btn btn-sm btn-outline-success" onclick="window.location.reload()">Reload page to play voiceovers in slideshow</button>';
+          desc.parentNode.insertBefore(hint, desc.nextSibling);
+        }
+      }
+
+      function generateSlide(filename, idx, customtext) {
+        var btn = document.querySelector('.slideshow-vo-slide-gen-btn[data-slide-index="' + idx + '"]');
+        if (btn) { btn.disabled = true; btn.textContent = 'Generating...'; }
+        updateSlideStatus(idx, 'generating');
+
+        var args = {cmid: parseInt(cmid, 10), filename: filename};
+        if (customtext && customtext.trim()) {
+          args.customtext = customtext.trim();
+        } else {
+          args.customtext = '';
+        }
+
+        return callAjax('mod_slideshow_generate_voiceover', args).then(function(d) {
+          if (d.success) {
+            updateSlideStatus(idx, 'ready');
+            if (btn) { btn.disabled = false; btn.textContent = 'Regenerate'; }
+            if (d.ocrtext) {
+              var ta = document.querySelector('.slideshow-vo-slide-textarea[data-slide-index="' + idx + '"]');
+              if (ta && !ta.value.trim()) { ta.value = d.ocrtext; }
+            }
+            showReloadHint();
+          } else {
+            updateSlideStatus(idx, 'error', d.error || 'Failed');
+            if (btn) { btn.disabled = false; btn.textContent = 'Retry'; }
+          }
+          return d;
+        }).catch(function(err) {
+          updateSlideStatus(idx, 'error', 'Error');
+          if (btn) { btn.disabled = false; btn.textContent = 'Retry'; }
+          return {success: false, error: err.message};
+        });
+      }
+
+      /* Per-slide voiceover disable toggles */
+      document.querySelectorAll('.slideshow-vo-toggle-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var idx = btn.dataset.slideIndex;
+          var filename = btn.dataset.filename;
+          var currentlyDisabled = btn.dataset.disabled === '1';
+          var newDisabled = currentlyDisabled ? 0 : 1;
+
+          btn.disabled = true;
+          callAjax('mod_slideshow_toggle_voiceover_disabled', {
+            cmid: parseInt(cmid, 10),
+            filename: filename,
+            disabled: newDisabled
+          }).then(function(d) {
+            btn.disabled = false;
+            var row = document.querySelector('.slideshow-vo-slide-row[data-slide-index="' + idx + '"]');
+            var genBtn = document.querySelector('.slideshow-vo-slide-gen-btn[data-slide-index="' + idx + '"]');
+            var ta = document.querySelector('.slideshow-vo-slide-textarea[data-slide-index="' + idx + '"]');
+            var statusEl = document.getElementById('slideshow-vo-slide-status-' + idx);
+
+            if (d.disabled) {
+              btn.dataset.disabled = '1';
+              btn.classList.add('is-disabled');
+              btn.title = 'Voiceover skipped - click to enable';
+              btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+              if (row) { row.classList.add('vo-disabled'); row.dataset.voDisabled = '1'; }
+              if (genBtn) genBtn.disabled = true;
+              if (ta) ta.disabled = true;
+              if (statusEl) statusEl.innerHTML = '<span class="slideshow-vo-badge slideshow-vo-badge-disabled">Skipped</span>';
+            } else {
+              btn.dataset.disabled = '0';
+              btn.classList.remove('is-disabled');
+              btn.title = 'Click to skip voiceover for this slide';
+              btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>';
+              if (row) { row.classList.remove('vo-disabled'); row.dataset.voDisabled = '0'; }
+              if (genBtn) genBtn.disabled = false;
+              if (ta) ta.disabled = false;
+              if (statusEl) statusEl.innerHTML = '<span class="slideshow-vo-badge slideshow-vo-badge-pending">Pending</span>';
+            }
+          }).catch(function() {
+            btn.disabled = false;
+          });
+        });
+      });
+
+      /* Per-slide generate buttons */
+      document.querySelectorAll('.slideshow-vo-slide-gen-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var idx = btn.dataset.slideIndex;
+          var filename = btn.dataset.filename;
+          var ta = document.querySelector('.slideshow-vo-slide-textarea[data-slide-index="' + idx + '"]');
+          var text = ta ? ta.value : '';
+          generateSlide(filename, idx, text);
+        });
+      });
+
+      /* Save text on blur */
+      document.querySelectorAll('.slideshow-vo-slide-textarea').forEach(function(ta) {
+        var origVal = ta.value;
+        ta.addEventListener('input', function() {
+          var saveBtn = document.querySelector('.slideshow-vo-save-text-btn[data-slide-index="' + ta.dataset.slideIndex + '"]');
+          if (saveBtn) saveBtn.style.display = (ta.value !== origVal) ? 'inline-block' : 'none';
+        });
+        ta.addEventListener('blur', function() {
+          if (ta.value !== origVal) {
+            callAjax('mod_slideshow_save_slide_text', {
+              cmid: parseInt(cmid, 10),
+              filename: ta.dataset.filename,
+              customtext: ta.value
+            }).then(function() {
+              origVal = ta.value;
+              var saveBtn = document.querySelector('.slideshow-vo-save-text-btn[data-slide-index="' + ta.dataset.slideIndex + '"]');
+              if (saveBtn) saveBtn.style.display = 'none';
+            });
+          }
+        });
+      });
+
+      /* Save text buttons */
+      document.querySelectorAll('.slideshow-vo-save-text-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var ta = document.querySelector('.slideshow-vo-slide-textarea[data-slide-index="' + btn.dataset.slideIndex + '"]');
+          if (ta) {
+            callAjax('mod_slideshow_save_slide_text', {
+              cmid: parseInt(cmid, 10),
+              filename: btn.dataset.filename,
+              customtext: ta.value
+            }).then(function() { btn.style.display = 'none'; });
+          }
+        });
+      });
+
+      /* Slide thumbnail hover-to-expand preview */
+      document.querySelectorAll('.slideshow-vo-slide-thumb-wrap').forEach(function(wrap) {
+        var expanded = wrap.querySelector('.slideshow-vo-slide-thumb-expanded');
+        if (!expanded) return;
+        wrap.addEventListener('mouseenter', function(e) {
+          var rect = wrap.getBoundingClientRect();
+          var top = rect.top;
+          var left = rect.right + 12;
+          if (left + 620 > window.innerWidth) {
+            left = rect.left - 620;
+            if (left < 10) left = 10;
+          }
+          if (top + 460 > window.innerHeight) {
+            top = window.innerHeight - 460;
+          }
+          if (top < 10) top = 10;
+          expanded.style.top = top + 'px';
+          expanded.style.left = left + 'px';
+          expanded.style.display = 'block';
+        });
+        wrap.addEventListener('mouseleave', function() {
+          expanded.style.display = 'none';
+        });
+      });
+
+      /* Generate All button - sequential per-slide from browser */
+      var genAllBtn = document.getElementById('slideshow-generate-all-vo-btn');
+      if (genAllBtn) {
+        genAllBtn.addEventListener('click', function() {
+          genAllBtn.disabled = true;
+          var progressWrap = document.getElementById('slideshow-vo-gen-progress');
+          var progressBar = document.getElementById('slideshow-vo-gen-bar');
+          var progressText = document.getElementById('slideshow-vo-gen-text');
+          if (progressWrap) progressWrap.style.display = 'flex';
+          if (progressBar) { progressBar.style.animation = 'none'; progressBar.style.width = '0%'; }
+
+          var rows = Array.from(document.querySelectorAll('.slideshow-vo-slide-row'));
+          var total = rows.length;
+          var done = 0;
+          var generated = 0;
+          var errors = 0;
+
+          function processNext(i) {
+            if (i >= total) {
+              if (progressBar) progressBar.style.width = '100%';
+              if (progressText) progressText.textContent = 'Done! ' + generated + ' generated, ' + errors + ' errors.';
+              var panelStatus = document.getElementById('slideshow-vo-panel-status');
+              if (panelStatus) {
+                if (generated > 0) {
+                  panelStatus.innerHTML = '<span class="slideshow-vo-badge slideshow-vo-badge-ready">Ready (' + generated + '/' + total + ' slides)</span>';
+                } else if (errors > 0) {
+                  panelStatus.innerHTML = '<span class="slideshow-vo-badge slideshow-vo-badge-error">' + errors + ' errors</span>';
+                }
+              }
+              genAllBtn.textContent = 'Reload Page';
+              genAllBtn.disabled = false;
+              genAllBtn.onclick = function(){ window.location.reload(); };
+              return;
+            }
+            var row = rows[i];
+            var filename = row.dataset.filename;
+            var idx = row.dataset.slideIndex;
+            var ta = row.querySelector('.slideshow-vo-slide-textarea');
+            var text = ta ? ta.value : '';
+
+            if (progressText) progressText.textContent = 'Slide ' + (i + 1) + ' of ' + total + '...';
+            if (progressBar) progressBar.style.width = Math.round(((i) / total) * 100) + '%';
+
+            generateSlide(filename, idx, text).then(function(d) {
+              done++;
+              if (d && d.success) generated++; else errors++;
+              if (progressBar) progressBar.style.width = Math.round(((done) / total) * 100) + '%';
+              processNext(i + 1);
+            });
+          }
+          processNext(0);
+        });
+      }
+    }
+
+    /* === Slideshow Carousel === */
+    var el = document.getElementById('nct-slideshow-carousel');
+    if (!el) return;
+
+    var items = Array.from(el.querySelectorAll('.carousel-item'));
+    if (!items.length) return;
+
+    var actives = Array.from(el.querySelectorAll('.carousel-item.active'));
+    if (actives.length === 0) { items[0].classList.add('active'); }
+    if (actives.length > 1) { actives.slice(1).forEach(function(n){ n.classList.remove('active'); }); }
+
+    var prevBtn = document.querySelector('[data-bs-target="#nct-slideshow-carousel"][data-bs-slide="prev"], .carousel-control-prev[data-bs-target="#nct-slideshow-carousel"]');
+    var nextBtn = document.querySelector('[data-bs-target="#nct-slideshow-carousel"][data-bs-slide="next"], .carousel-control-next[data-bs-target="#nct-slideshow-carousel"]');
+
+    var requireVO = el.dataset.requirevoiceover === '1';
+    var voiceoverFinished = {};
+    var videoWatched = {};
+    var ytListeningStarted = {};
+
+    function idx(){ var cur = el.querySelector('.carousel-item.active'); return cur ? items.indexOf(cur) : -1; }
+    function updateCounter(i){
+      var currentEl = document.querySelector('.slideshow-pagination-counter .current-slide');
+      if (currentEl && typeof i === 'number') currentEl.textContent = (i + 1);
+    }
+
+    function slideHasVoiceover(i) {
+      return items[i] && items[i].dataset.hasVoiceover === '1';
+    }
+
+    function getSlideVideoMinwatch(slideEl) {
+      if (!slideEl || !slideEl.classList.contains('slide-video')) return 0;
+      return parseInt(slideEl.dataset.videominwatch || '0', 10);
+    }
+
+    function onVideoWatchComplete(i) {
+      if (videoWatched[i]) return;
+      videoWatched[i] = true;
+      var bar = document.getElementById('video-watch-bar-' + i);
+      if (bar) {
+        bar.classList.add('ss-watch-satisfied');
+        setTimeout(function(){ bar.style.display = 'none'; }, 1500);
+      }
+      if (idx() === i) { updateControls(i); }
+    }
+
+    function activateVideoSlide(slideEl, i) {
+      var req = getSlideVideoMinwatch(slideEl);
+      if (req === 0 || videoWatched[i]) return;
+      var bar = document.getElementById('video-watch-bar-' + i);
+      if (bar) bar.style.display = 'flex';
+      if (slideEl.dataset.videosource === 'youtube' && !ytListeningStarted[i]) {
+        ytListeningStarted[i] = true;
+        setTimeout(function(){
+          var iframe = document.getElementById('yt-player-' + i);
+          if (iframe && iframe.contentWindow) {
+            try { iframe.contentWindow.postMessage('{"event":"listening","id":1}', '*'); } catch(ex){}
+          }
+        }, 800);
+      }
+    }
+
+    function isNextAllowed(i) {
+      if (items[i]) {
+        var req = getSlideVideoMinwatch(items[i]);
+        if (req !== 0 && !videoWatched[i]) return false;
+      }
+      if (!requireVO) return true;
+      if (!slideHasVoiceover(i)) return true;
+      return !!voiceoverFinished[i];
+    }
+
+    function updateControls(i){
+      setBtnState(prevBtn, i > 0);
+      var canNext = i < items.length - 1;
+      if (canNext && !isNextAllowed(i)) {
+        canNext = false;
+      }
+      setBtnState(nextBtn, canNext);
+    }
+
+    function setupVoiceoverForSlide(slideItem) {
+      var audio = slideItem.querySelector('.slideshow-audio');
+      var playBtn = slideItem.querySelector('.slideshow-vo-play');
+      var progressBar = slideItem.querySelector('.slideshow-vo-progress-bar');
+      var statusEl = slideItem.querySelector('.slideshow-vo-status');
+      var slideIdx = parseInt(slideItem.dataset.slideIndex, 10);
+
+      if (!audio || !playBtn) return;
+
+      playBtn.addEventListener('click', function() {
+        if (audio.paused) {
+          document.querySelectorAll('.slideshow-audio').forEach(function(a) {
+            if (a !== audio) { a.pause(); a.currentTime = 0; }
+          });
+          audio.play();
+          playBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+          if (statusEl) statusEl.textContent = '';
+        } else {
+          audio.pause();
+          playBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+        }
+      });
+
+      audio.addEventListener('timeupdate', function() {
+        if (progressBar && audio.duration) {
+          var pct = (audio.currentTime / audio.duration) * 100;
+          progressBar.style.width = pct + '%';
+        }
+      });
+
+      audio.addEventListener('ended', function() {
+        playBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+        if (progressBar) progressBar.style.width = '100%';
+        voiceoverFinished[slideIdx] = true;
+        if (statusEl) statusEl.textContent = '';
+        updateControls(idx());
+        if (slideIdx === items.length - 1) {
+          playSuccessSound();
+          launchConfetti();
+        }
+      });
+
+      audio.addEventListener('error', function() {
+        voiceoverFinished[slideIdx] = true;
+        if (statusEl) statusEl.textContent = '';
+        updateControls(idx());
+      });
+    }
+
+    items.forEach(function(item) {
+      if (item.dataset.hasVoiceover === '1') {
+        setupVoiceoverForSlide(item);
+      }
+    });
+
+    /* === Video watch gating — YouTube postMessage listener === */
+    window.addEventListener('message', function(e) {
+      var data;
+      try { data = (typeof e.data === 'string') ? JSON.parse(e.data) : e.data; } catch(ex){ return; }
+      if (!data || !data.event) return;
+      document.querySelectorAll('iframe.slideshow-video-frame').forEach(function(frame) {
+        if (e.source !== frame.contentWindow) return;
+        var ii = parseInt(frame.dataset.slideIndex, 10);
+        if (isNaN(ii)) return;
+        var req2 = getSlideVideoMinwatch(items[ii]);
+        if (req2 === 0) return;
+        if (data.event === 'onStateChange' && (data.info === 0 || data.info === '0')) {
+          onVideoWatchComplete(ii);
+        }
+        if (data.event === 'infoDelivery' && data.info && typeof data.info.currentTime !== 'undefined') {
+          if (req2 > 0 && parseFloat(data.info.currentTime) >= req2) {
+            onVideoWatchComplete(ii);
+          }
+        }
+      });
+    });
+
+    /* === Video watch gating — HTML5 video listeners === */
+    document.querySelectorAll('.slideshow-video-element').forEach(function(video) {
+      var ii = parseInt(video.dataset.slideIndex, 10);
+      if (isNaN(ii)) return;
+      var req2 = getSlideVideoMinwatch(items[ii]);
+      if (req2 === 0) return;
+      video.addEventListener('timeupdate', function() {
+        if (videoWatched[ii]) return;
+        if (req2 > 0 && video.currentTime >= req2) onVideoWatchComplete(ii);
+      });
+      video.addEventListener('ended', function() { onVideoWatchComplete(ii); });
+    });
+
+    function autoPlayVoiceover(slideItem) {
+      if (slideItem.dataset.hasVoiceover !== '1') return;
+      var audio = slideItem.querySelector('.slideshow-audio');
+      var playBtn = slideItem.querySelector('.slideshow-vo-play');
+      if (audio && playBtn) {
+        document.querySelectorAll('.slideshow-audio').forEach(function(a) {
+          if (a !== audio) { a.pause(); a.currentTime = 0; }
+        });
+        audio.currentTime = 0;
+        audio.play().then(function() {
+          playBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+        }).catch(function() {});
+      }
+    }
+
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        document.querySelectorAll('.slideshow-audio').forEach(function(a) {
+          if (!a.paused) {
+            a.pause();
+            var si = a.closest('.carousel-item');
+            if (si) {
+              var pb = si.querySelector('.slideshow-vo-play');
+              if (pb) pb.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+            }
+          }
+        });
+      }
+    });
+
+    var BS = (window.bootstrap && window.bootstrap.Carousel) ? window.bootstrap : null;
+    if (BS && BS.Carousel) {
+      var instance = BS.Carousel.getOrCreateInstance(el, { interval:false, wrap:false, ride:false, touch:true, keyboard:true });
+
+      el.addEventListener('slide.bs.carousel', function (e) {
+        if (!requireVO) return;
+        var ci = idx();
+        var ti = e.to !== undefined ? e.to : -1;
+        if (ti > ci && !isNextAllowed(ci)) {
+          e.preventDefault();
+        }
+      });
+
+      el.addEventListener('slid.bs.carousel', function (e) {
+        var t = e.relatedTarget || null;
+        var s = t ? t.getAttribute('data-slide-index') : null;
+        var i = (s !== null && !isNaN(s)) ? parseInt(s, 10) : idx();
+        updateCounter(i); updateControls(i);
+        if (t) {
+          autoPlayVoiceover(t);
+          activateVideoSlide(t, i);
+        }
+        if (i === items.length - 1 && (!t || (t.dataset.hasVoiceover !== '1' && !t.classList.contains('slide-video')))) {
+          playSuccessSound();
+          launchConfetti();
+        }
+      });
+
+      if (requireVO) {
+        el.addEventListener('keydown', function(ev) {
+          if (ev.key === 'ArrowRight' || ev.key === 'Right') {
+            if (!isNextAllowed(idx())) { ev.preventDefault(); ev.stopPropagation(); }
+          }
+        }, true);
+      }
+
+      if (prevBtn) prevBtn.addEventListener('click', function(ev){ ev.preventDefault(); if (idx() > 0) instance.prev(); }, {passive:false});
+      if (nextBtn) nextBtn.addEventListener('click', function(ev){ ev.preventDefault(); var ci = idx(); if (ci < items.length - 1 && isNextAllowed(ci)) instance.next(); }, {passive:false});
+      updateCounter(idx()); updateControls(idx());
+
+      autoPlayVoiceover(items[0]);
+      if (items[0]) activateVideoSlide(items[0], 0);
+      return;
+    }
+
+    var animating = false;
+
+    function fireSlidEvents(relatedTarget){
+      var nev = new CustomEvent('slid.bs.carousel', { bubbles: true, cancelable: true });
+      try { Object.defineProperty(nev, 'relatedTarget', { value: relatedTarget, enumerable: true }); } catch(e){ nev.relatedTarget = relatedTarget; }
+      el.dispatchEvent(nev);
+
+      if (window.jQuery) {
+        var $ = window.jQuery;
+        var jev = $.Event('slid.bs.carousel');
+        jev.relatedTarget = relatedTarget;
+        $(el).trigger(jev);
+      }
+    }
+
+    function slideTo(targetIndex, direction){
+      if (animating) return;
+      var currentIndex = idx();
+      if (targetIndex === currentIndex || targetIndex < 0 || targetIndex >= items.length) return;
+
+      if (direction === 'next' && !isNextAllowed(currentIndex)) return;
+
+      var current = items[currentIndex];
+      var target  = items[targetIndex];
+      var nextClass = (direction === 'next') ? 'carousel-item-next' : 'carousel-item-prev';
+      var dirClass  = (direction === 'next') ? 'carousel-item-start' : 'carousel-item-end';
+
+      animating = true;
+
+      target.classList.add(nextClass);
+
+      requestAnimationFrame(function(){
+        current.classList.add(dirClass);
+        target.classList.add(dirClass);
+
+        function cleanup(){
+          target.classList.remove(nextClass, dirClass);
+          current.classList.remove('active', dirClass);
+          target.classList.add('active');
+
+          var i = idx();
+          updateCounter(i); updateControls(i);
+
+          fireSlidEvents(target);
+          autoPlayVoiceover(target);
+          activateVideoSlide(target, i);
+
+          var ti = idx();
+          if (ti === items.length - 1 && target.dataset.hasVoiceover !== '1' && !target.classList.contains('slide-video')) {
+            playSuccessSound();
+            launchConfetti();
+          }
+
+          animating = false;
+          el.removeEventListener('transitionend', onEnd, true);
+        }
+
+        var ended = false;
+        var timer = setTimeout(function(){ if (!ended) cleanup(); }, 700);
+
+        function onEnd(e){
+          if (!e.target.classList || !e.target.classList.contains('carousel-item')) return;
+          ended = true; clearTimeout(timer);
+          cleanup();
+        }
+        el.addEventListener('transitionend', onEnd, true);
+      });
+    }
+
+    function manualNext(){ var i = idx(); if (i < items.length - 1 && isNextAllowed(i)) slideTo(i + 1, 'next'); }
+    function manualPrev(){ var i = idx(); if (i > 0) slideTo(i - 1, 'prev'); }
+
+    if (prevBtn) prevBtn.addEventListener('click', function(e){ e.preventDefault(); manualPrev(); }, {passive:false});
+    if (nextBtn) nextBtn.addEventListener('click', function(e){ e.preventDefault(); manualNext(); }, {passive:false});
+
+    updateCounter(idx()); updateControls(idx());
+
+    autoPlayVoiceover(items[0]);
+    if (items[0]) activateVideoSlide(items[0], 0);
+  });
+})();
+{{/js}}
