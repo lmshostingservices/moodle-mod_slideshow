@@ -93,11 +93,12 @@
  * @package     mod_slideshow
  * @copyright   2025 National Corporate Training Pty Ltd (https://nct.net.au/) <believe@nct.net.au>
  * @author      LMSACE Dev Team <lmsace.com>
+ * @license    http://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_slideshow';
-$plugin->version   = 2026072300233;
+$plugin->version   = 2026072300235;
 $plugin->requires  = 2022041900;
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = '1.6.29'; // FEAT: Video slides (YouTube/URL/upload) + poster image slides with position selection and watch gating.
+$plugin->release   = '1.6.30'; // FEAT: Video slides (YouTube/URL/upload) + poster image slides with position selection and watch gating.

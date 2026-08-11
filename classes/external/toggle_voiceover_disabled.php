@@ -1,4 +1,19 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
  * Slideshow - Toggle voiceover disabled flag for a single slide
  *
@@ -33,7 +48,6 @@ if (class_exists('\core_external\external_api')) {
 use context_module;
 
 class toggle_voiceover_disabled extends tvd_external_api {
-
     public static function execute_parameters(): tvd_external_function_parameters {
         return new tvd_external_function_parameters([
             'cmid'     => new tvd_external_value(PARAM_INT, 'Course module ID'),

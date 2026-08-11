@@ -1,4 +1,19 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
  * Slideshow - Generate voiceover for a single slide
  * Uses OCR to extract text from slide image, then routes through
@@ -32,7 +47,6 @@ if (class_exists('\core_external\external_api')) {
 use context_module;
 
 class generate_voiceover extends vo_external_api {
-
     const CREDITS_PER_VOICEOVER = 5;
 
     public static function execute_parameters(): vo_external_function_parameters {

@@ -1,4 +1,19 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
  * mod_slideshow - Save (create or update) an extra slide (video or poster).
  *
@@ -29,7 +44,6 @@ if (class_exists('\core_external\external_api')) {
 }
 
 class save_extra_slide extends ses_external_api {
-
     public static function execute_parameters(): ses_external_function_parameters {
         return new ses_external_function_parameters([
             'cmid'          => new ses_external_value(PARAM_INT,  'Course module ID'),

@@ -20,6 +20,7 @@
  * @package     mod_slideshow
  * @copyright   2025 National Corporate Training Pty Ltd (https://nct.net.au/) <believe@nct.net.au>
  * @author      LMSACE Dev Team <lmsace.com>
+ * @license    http://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
 
@@ -29,7 +30,6 @@ require_once($CFG->dirroot . '/mod/slideshow/backup/moodle2/restore_slideshow_st
  * Defines the restore task for the slideshow activity.
  */
 class restore_slideshow_activity_task extends restore_activity_task {
-
     /**
      * No specific settings for this restore task.
      */

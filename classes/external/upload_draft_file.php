@@ -1,4 +1,19 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
  * Slideshow - Upload a file directly to a Moodle draft area
  *
@@ -42,7 +57,6 @@ use context_course;
 use context_user;
 
 class upload_draft_file extends udf_external_api {
-
     public static function execute_parameters(): udf_external_function_parameters {
         return new udf_external_function_parameters([
             'cmid' => new udf_external_value(PARAM_INT, 'Course module ID (0 if creating new activity)', VALUE_DEFAULT, 0),

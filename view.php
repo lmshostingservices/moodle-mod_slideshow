@@ -21,6 +21,7 @@
  * @package     mod_slideshow
  * @copyright   2025 National Corporate Training Pty Ltd (https://nct.net.au/) <believe@nct.net.au>
  * @author      LMSACE Dev Team <lmsace.com>
+ * @license    http://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
  */
 
 require_once('../../config.php');
