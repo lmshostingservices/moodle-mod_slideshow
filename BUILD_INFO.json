@@ -1,9 +1,9 @@
 {
   "component": "mod_slideshow",
-  "version": "1.6.22",
-  "numeric_version": "2026042200022",
-  "build_id": "slideshow21w01x021",
-  "build_timestamp": "2026-04-22T07:07:50.402Z",
+  "version": "1.6.30",
+  "numeric_version": "2026072300",
+  "build_id": "32cfa34fdc77dd7f",
+  "build_timestamp": "2026-08-11T00:00:00.000Z",
   "folder": "mod_slideshow",
-  "verification": "amd_encoding_fix_non_ascii_clean"
+  "verification": "10digit-migration-1.6.30"
 }
