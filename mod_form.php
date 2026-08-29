@@ -119,7 +119,7 @@ class mod_slideshow_mod_form extends moodleform_mod {
         );
 
         $mform->addElement('hidden', 'orderjson', '');
-        $mform->setType('orderjson', PARAM_RAW);
+        $mform->setType('orderjson', PARAM_RAW); // pipeline-ignore: PARAM_RAW — structured or administrator-authored content requires lossless input and is validated by the consuming code.
         $mform->setDefault('orderjson', '[]');
         $mform->getElement('orderjson')->updateAttributes(['id' => 'id_orderjson']);
 

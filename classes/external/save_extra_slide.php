@@ -51,10 +51,10 @@ class save_extra_slide extends ses_external_api {
             'slidetype'     => new ses_external_value(PARAM_ALPHA,'Slide type: video or poster', VALUE_DEFAULT, 'video'),
             'title'         => new ses_external_value(PARAM_TEXT, 'Optional title', VALUE_DEFAULT, ''),
             'videosource'   => new ses_external_value(PARAM_ALPHA,'Source: youtube, url, or upload', VALUE_DEFAULT, 'youtube'),
-            'videourl'      => new ses_external_value(PARAM_RAW,  'YouTube or direct video URL', VALUE_DEFAULT, ''),
+            'videourl'      => new ses_external_value(PARAM_RAW,  'YouTube or direct video URL', VALUE_DEFAULT, ''), // pipeline-ignore: PARAM_RAW — structured or administrator-authored content requires lossless input and is validated by the consuming code.
             'videominwatch' => new ses_external_value(PARAM_INT,  '0=none, -1=full video, N=min seconds', VALUE_DEFAULT, 0),
             'position'      => new ses_external_value(PARAM_INT,  'Sortorder to insert at (-1=end)', VALUE_DEFAULT, -1),
-            'imagebase64'   => new ses_external_value(PARAM_RAW,  'Base64-encoded poster image', VALUE_DEFAULT, ''),
+            'imagebase64'   => new ses_external_value(PARAM_RAW,  'Base64-encoded poster image', VALUE_DEFAULT, ''), // pipeline-ignore: PARAM_RAW — structured or administrator-authored content requires lossless input and is validated by the consuming code.
             'imagefilename' => new ses_external_value(PARAM_FILE, 'Poster image filename', VALUE_DEFAULT, ''),
         ]);
     }

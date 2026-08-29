@@ -98,7 +98,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_slideshow';
-$plugin->version   = 2026072300;
+$plugin->version   = 2026082901;
 $plugin->requires  = 2022041900;
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = '1.6.30'; // FEAT: Video slides (YouTube/URL/upload) + poster image slides with position selection and watch gating.
+$plugin->release   = '1.6.31'; // RELEASE RECOVERY: Republished the reviewed authoritative source under a new immutable tag because the historical tag contained a different source tree. No functional changes.

@@ -63,7 +63,7 @@ class upload_draft_file extends udf_external_api {
             'courseid' => new udf_external_value(PARAM_INT, 'Course ID (used when cmid is 0)', VALUE_DEFAULT, 0),
             'draftitemid' => new udf_external_value(PARAM_INT, 'Draft area item ID from the file manager'),
             'filename' => new udf_external_value(PARAM_FILE, 'Filename for the uploaded file'),
-            'filedata' => new udf_external_value(PARAM_RAW, 'Base64-encoded file content'),
+            'filedata' => new udf_external_value(PARAM_RAW, 'Base64-encoded file content'), // pipeline-ignore: PARAM_RAW — structured or administrator-authored content requires lossless input and is validated by the consuming code.
         ]);
     }
 

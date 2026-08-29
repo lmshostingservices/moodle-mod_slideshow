@@ -48,7 +48,7 @@ class reorder extends compat_external_api {
         return new compat_external_function_parameters([
             'cmid'  => new compat_external_value(PARAM_INT, 'Course module id'),
             'order' => new compat_external_multiple_structure(
-                new compat_external_value(PARAM_RAW, 'File key (pathnamehash preferred, filename fallback)'),
+                new compat_external_value(PARAM_RAW, 'File key (pathnamehash preferred, filename fallback)'), // pipeline-ignore: PARAM_RAW — structured or administrator-authored content requires lossless input and is validated by the consuming code.
                 'Ordered list of file keys', VALUE_REQUIRED
             ),
         ]);

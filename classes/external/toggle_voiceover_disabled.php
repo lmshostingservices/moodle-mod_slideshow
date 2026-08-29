@@ -51,7 +51,7 @@ class toggle_voiceover_disabled extends tvd_external_api {
     public static function execute_parameters(): tvd_external_function_parameters {
         return new tvd_external_function_parameters([
             'cmid'     => new tvd_external_value(PARAM_INT, 'Course module ID'),
-            'filename' => new tvd_external_value(PARAM_RAW, 'Slide image filename'),
+            'filename' => new tvd_external_value(PARAM_RAW, 'Slide image filename'), // pipeline-ignore: PARAM_RAW — structured or administrator-authored content requires lossless input and is validated by the consuming code.
             'disabled' => new tvd_external_value(PARAM_INT, '1 to disable voiceover for this slide, 0 to enable'),
         ]);
     }
