@@ -46,7 +46,16 @@ require_login($course, true, $cm);
 $context = context_module::instance($cm->id);
 require_capability('mod/slideshow:view', $context);
 
+$event = \mod_slideshow\event\course_module_viewed::create([
+    'objectid' => $slideshow->id,
+    'context' => $context,
+]);
+$event->add_record_snapshot('course', $course);
+$event->add_record_snapshot('slideshow', $slideshow);
+$event->trigger();
+
 $completion = new completion_info($course);
+$completion->set_module_viewed($cm);
 
 $viewed_count = 0;
 if ($completiondata = $DB->get_record('slideshow_completion', ['instanceid' => $slideshow->id, 'userid' => $USER->id])) {

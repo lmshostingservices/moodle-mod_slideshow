@@ -10,7 +10,7 @@ Image slideshow activity with PowerPoint import, AI voiceover narration (52 lang
 
 ## Current Release
 
-Version 1.6.31 republishes the reviewed authoritative source under a new immutable tag because the historical tag contained a different source tree. There are no functional changes in this release.
+Version 1.6.32 fixes Moodle activity completion when “View the activity” is selected, including when it is combined with the slideshow's slide-completion rule.
 
 ## Licence
 
