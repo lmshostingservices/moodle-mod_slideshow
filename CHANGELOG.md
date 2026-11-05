@@ -1,3 +1,9 @@
+## [v1.6.33] - 2026-11-05
+
+### Fixed
+- Moodle 5.3: opening an AI Slideshow no longer fails with "Coding error detected... The course_module_viewed event must define objectid and object table". The viewed event now declares its object table.
+- Added the standard activity list page (index.php) and its instance-list-viewed event, so "all slideshows in this course" links no longer return 404.
+
 ## [v1.6.32] - 2026-10-29
 
 ### Fixed

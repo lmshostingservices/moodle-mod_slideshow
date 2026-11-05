@@ -98,7 +98,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_slideshow';
-$plugin->version   = 2026102900;
+$plugin->version   = 2026110500;
 $plugin->requires  = 2022041900;
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = '1.6.32';
+$plugin->release   = '1.6.33';
