@@ -1,3 +1,10 @@
+## [v1.6.34] - 2026-11-24
+
+### Fixed
+- Fixed: adding or editing the activity failed on Moodle 4.0 to 4.2 with "Call to undefined method ... get_suffix()". The completion settings now use the 4.3+ field suffix only where Moodle has it.
+- Fixed: "Undefined property: stdClass::$slideimages" warning when an AI Slideshow was created or updated without the edit form (web services, course tools, data generators). Slide images are only saved when the form sends them, and existing images are left alone.
+- Added a test data generator, so the activity can be created by Moodle's automated tests and by demo and course-building tools. Tests cover creating, listing, deleting, backing up and restoring the activity.
+
 ## [v1.6.33] - 2026-11-05
 
 ### Fixed

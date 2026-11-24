@@ -644,7 +644,7 @@ class mod_slideshow_mod_form extends moodleform_mod {
 
     public function add_completion_rules() {
         $mform  = $this->_form;
-        $suffix = $this->get_suffix();
+        $suffix = $this->completion_suffix();
 
         $mform->addElement(
             'checkbox',
@@ -659,12 +659,12 @@ class mod_slideshow_mod_form extends moodleform_mod {
     }
 
     public function completion_rule_enabled($data) {
-        return (!empty($data['completionallslides' . $this->get_suffix()]));
+        return (!empty($data['completionallslides' . $this->completion_suffix()]));
     }
 
     public function data_postprocessing($data) {
         parent::data_postprocessing($data);
-        $suffix = $this->get_suffix();
+        $suffix = $this->completion_suffix();
         $data->completionallslides = isset($data->{"completionallslides$suffix"}) ? 1 : 0;
     }
 
@@ -672,7 +672,7 @@ class mod_slideshow_mod_form extends moodleform_mod {
         global $CFG, $DB, $USER;
 
         if (isset($defaultvalues['completionallslides'])) {
-            $suffix = $this->get_suffix();
+            $suffix = $this->completion_suffix();
             $defaultvalues["completionallslides$suffix"] = $defaultvalues['completionallslides'];
         }
 
@@ -746,5 +746,16 @@ class mod_slideshow_mod_form extends moodleform_mod {
         }
 
         return $errors;
+    }
+
+    /**
+     * Suffix Moodle 4.3+ adds to completion fields on the bulk "Default activity completion" form.
+     *
+     * Moodle 4.0 to 4.2 have no get_suffix(), so the fields keep their plain names there.
+     *
+     * @return string
+     */
+    protected function completion_suffix(): string {
+        return method_exists($this, 'get_suffix') ? $this->get_suffix() : '';
     }
 }
