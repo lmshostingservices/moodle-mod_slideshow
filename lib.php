@@ -244,14 +244,18 @@ function slideshow_add_instance(stdClass $slideshow, $mform) {
 
     $context = \context_module::instance($slideshow->coursemodule);
 
-    file_save_draft_area_files(
-        $slideshow->slideimages,
-        $context->id,
-        'mod_slideshow',
-        'slideimages',
-        $slideshow->id,
-        ['subdirs' => 0, 'maxfiles' => -1, 'preservetimestamps' => true]
-    );
+    // Slide images arrive as a draft area from the edit form. Activities created another way
+    // (web services, generators, course copy tools) have none, so leave the file area as it is.
+    if (!empty($slideshow->slideimages)) {
+        file_save_draft_area_files(
+            $slideshow->slideimages,
+            $context->id,
+            'mod_slideshow',
+            'slideimages',
+            $slideshow->id,
+            ['subdirs' => 0, 'maxfiles' => -1, 'preservetimestamps' => true]
+        );
+    }
 
     $ids = [];
     if (!empty($slideshow->orderjson)) {
@@ -293,14 +297,18 @@ function slideshow_update_instance(stdClass $slideshow, $mform) {
     );
     $ajaxorder = array_map(static fn($f) => $f->get_filename(), $beforefiles);
 
-    file_save_draft_area_files(
-        $slideshow->slideimages,
-        $context->id,
-        'mod_slideshow',
-        'slideimages',
-        $slideshow->id,
-        ['subdirs' => 0, 'maxfiles' => -1, 'preservetimestamps' => true]
-    );
+    // Slide images arrive as a draft area from the edit form. Activities created another way
+    // (web services, generators, course copy tools) have none, so leave the file area as it is.
+    if (!empty($slideshow->slideimages)) {
+        file_save_draft_area_files(
+            $slideshow->slideimages,
+            $context->id,
+            'mod_slideshow',
+            'slideimages',
+            $slideshow->id,
+            ['subdirs' => 0, 'maxfiles' => -1, 'preservetimestamps' => true]
+        );
+    }
 
     $seq = [];
     if (!empty($slideshow->orderjson)) {
