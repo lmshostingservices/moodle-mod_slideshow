@@ -377,6 +377,9 @@ $templatecontext = [
     'voiceoverstatus'     => $slideshow->voiceoverstatus ?? 'none',
     'voiceoverreadycount' => $voiceoverreadycount,
     'voiceoverhasready'   => ($slideshow->voiceoverstatus ?? 'none') === 'ready',
+    // Bring your own AI: narration runs on the site's own AI, so no credits are charged.
+    'ownvoice'            => \mod_slideshow\byok::uses_voice(),
+    'ownvoicetext'        => get_string('byokownvoice', 'slideshow'),
 ];
 
 $PAGE->set_url('/mod/slideshow/view.php', ['id' => $cm->id]);

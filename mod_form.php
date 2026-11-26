@@ -610,6 +610,10 @@ class mod_slideshow_mod_form extends moodleform_mod {
         } else {
             $creditinfo = get_string('voiceovercreditinfo_new', 'slideshow');
         }
+        if (\mod_slideshow\byok::uses_voice()) {
+            // Bring your own AI: narration runs on the site's own AI.
+            $creditinfo = get_string('byokformnote', 'slideshow');
+        }
 
         $credithtml = '<div style="padding:10px;background:#eff6ff;border:1px solid #3b82f6;border-radius:8px;margin-top:8px;">'
             . '<strong style="color:#1d4ed8;">Credit Information:</strong> ' . $creditinfo . '</div>';

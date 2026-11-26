@@ -93,7 +93,9 @@ class generate_voiceover extends vo_external_api {
             $apikey = trim(get_config('mod_slideshow', 'apikey') ?? '');
         }
 
-        if (empty($siteid) || empty($apikey)) {
+        // Bring your own AI: narration runs on the site's own AI, so LMS Labs credentials are optional.
+        $byok = \mod_slideshow\byok::uses_voice();
+        if ((empty($siteid) || empty($apikey)) && !$byok) {
             return ['success' => false, 'audioContent' => '', 'audioType' => '', 'duration' => 0, 'ocrtext' => '',
                 'error' => 'API not configured. Please install AI Grader Central Config or configure Site ID and API Key in plugin settings.'];
         }
@@ -143,10 +145,15 @@ class generate_voiceover extends vo_external_api {
             $payload['mimeType'] = $mimetype;
         }
 
-        $url = 'https://lms-labs.com/api/moodle/slideshow/generate-voiceover';
-        $response = $curl->post($url, json_encode($payload));
-        $info = $curl->get_info();
-        $httpcode = isset($info['http_code']) ? $info['http_code'] : 0;
+        if ($byok) {
+            [$httpcode, $answer] = \mod_slideshow\byok::voiceover($payload);
+            $response = json_encode($answer);
+        } else {
+            $url = 'https://lms-labs.com/api/moodle/slideshow/generate-voiceover';
+            $response = $curl->post($url, json_encode($payload));
+            $info = $curl->get_info();
+            $httpcode = isset($info['http_code']) ? $info['http_code'] : 0;
+        }
 
         if ($httpcode < 200 || $httpcode >= 300) {
             $data = json_decode($response, true);
@@ -192,9 +199,9 @@ class generate_voiceover extends vo_external_api {
         $audiohash = $storedfile->get_contenthash();
 
         if (!empty($providedtext)) {
-            self::upsertVoiceoverRecord($DB, $slideshow, $params['filename'], $file->get_contenthash(), $ocrtext, $providedtext, 'ready', $duration, '', 1, $audiohash);
+            self::upsertVoiceoverRecord($DB, $slideshow, $params['filename'], $file->get_contenthash(), $ocrtext, $providedtext, 'ready', $duration, '', $byok ? 0 : 1, $audiohash);
         } else {
-            self::upsertVoiceoverRecord($DB, $slideshow, $params['filename'], $file->get_contenthash(), $ocrtext, '', 'ready', $duration, '', 1, $audiohash);
+            self::upsertVoiceoverRecord($DB, $slideshow, $params['filename'], $file->get_contenthash(), $ocrtext, '', 'ready', $duration, '', $byok ? 0 : 1, $audiohash);
         }
 
         return [
