@@ -1,3 +1,9 @@
+## [v1.7.0] - 2026-11-26
+
+### Added
+- Bring your own AI: with an LMS Labs Bring your own AI licence and Voice set to the site's own key in AI Grader Central Config, slide narration runs on the site's own AI instead of LMS Labs credits. The slide's text is read by the site's own Vision AI when that is set up, otherwise by LMS Labs free of credits. The service's narration route (reading, tidying and speaking a slide) is ported into the plugin and was checked against the service source on 12,500 randomised cases with identical results.
+- The voiceover panel and the activity settings say when narration runs on the site's own AI and drop the per-slide credit cost.
+
 ## [v1.6.34] - 2026-11-24
 
 ### Fixed

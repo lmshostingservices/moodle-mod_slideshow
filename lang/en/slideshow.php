@@ -45,6 +45,10 @@ $string['slideshow:addinstance'] = 'Add a new slideshow';
 $string['slideshow:manage'] = 'Manage slideshow';
 
 $string['activitycompleted'] = 'Activity completed';
+$string['byok_needvision'] = 'Reading the text on a slide needs either LMS Labs credentials or Vision set to your own AI under Bring your own AI. You can also type the narration for this slide yourself.';
+$string['byok_said'] = 'Your AI said: {$a}';
+$string['byokformnote'] = 'Narration runs on your site\'s own AI, so no LMS Labs credits are used.';
+$string['byokownvoice'] = 'Narrated by your own AI. No LMS Labs credits are used.';
 $string['completionerrormarking'] = 'Error updating completion status';
 $string['previous'] = 'Previous';
 $string['next'] = 'Next';

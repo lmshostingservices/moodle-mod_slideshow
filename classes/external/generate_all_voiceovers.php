@@ -109,7 +109,7 @@ class generate_all_voiceovers extends vo_external_api {
 
             if ($result['success'] && !empty($result['audioContent'])) {
                 $generated++;
-                $totalcredits += generate_voiceover::CREDITS_PER_VOICEOVER;
+                $totalcredits += \mod_slideshow\byok::uses_voice() ? 0 : generate_voiceover::CREDITS_PER_VOICEOVER;
             } else if ($result['success'] && empty($result['audioContent'])) {
                 $skipped++;
             } else {

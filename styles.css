@@ -1129,3 +1129,30 @@
 .ss-add-status {
   min-height: 0;
 }
+
+/* Bring your own AI: narration runs on the site's own AI. */
+.slideshow-ownai-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 12px;
+    padding: 4px 12px;
+    border: 1px solid rgba(53, 122, 50, 0.28);
+    border-radius: 999px;
+    background: rgba(53, 122, 50, 0.08);
+    color: #2b632a;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+}
+
+.slideshow-ownai-badge .fa {
+    font-size: 14px;
+}
+
+[data-bs-theme="dark"] .slideshow-ownai-badge {
+    border-color: rgba(93, 149, 91, 0.4);
+    background: rgba(93, 149, 91, 0.14);
+    color: #aecaad;
+}

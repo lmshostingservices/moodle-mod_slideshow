@@ -17,8 +17,11 @@
     </div>
     <div class="slideshow-teacher-panel-body">
       <p class="slideshow-teacher-panel-desc" id="slideshow-vo-panel-desc">
-        Add voiceover text for each slide below. You can paste your own text or leave blank to extract text from the image automatically. Each slide costs 5 credits.
+        Add voiceover text for each slide below. You can paste your own text or leave blank to extract text from the image automatically.{{^ownvoice}} Each slide costs 5 credits.{{/ownvoice}}
       </p>
+      {{#ownvoice}}
+      <p class="slideshow-ownai-badge" data-region="ownai"><i class="fa fa-microchip" aria-hidden="true"></i> {{ownvoicetext}}</p>
+      {{/ownvoice}}
       <div class="slideshow-teacher-panel-actions">
         <button type="button" class="btn btn-primary" id="slideshow-generate-all-vo-btn">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px"><polygon points="5 3 19 12 5 21 5 3"/></svg>
